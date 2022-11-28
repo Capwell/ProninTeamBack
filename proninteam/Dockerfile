@@ -5,4 +5,4 @@ RUN pip3 install -r /app/requirements.txt --no-cache-dir
 COPY . /app
 WORKDIR proninteam
 RUN echo yes | python manage.py collectstatic --noinput
-CMD ["gunicorn", "proninlsteam.wsgi:application", "--bind", "0:8000" ]
+CMD ["gunicorn", "proninteam.wsgi:application", "--bind", "0:8000" ]
