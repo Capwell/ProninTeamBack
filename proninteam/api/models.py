@@ -1,5 +1,10 @@
+import os
+
 from django.db import models
 from django.core.mail import EmailMessage
+
+EMAIL_TO = os.getenv('EMAIL_TO')
+EMAIL_FROM = os.getenv('EMAIL_FROM')
 
 
 class Request(models.Model):
@@ -29,8 +34,8 @@ class Request(models.Model):
         mail = EmailMessage(
             subject='Новая Заявка!',
             body=f'{self.name}, {self.communicate}, {self.message}',
-            from_email='proninservice@gmail.com',
-            to=['proninc@yandex.ru']
+            from_email=EMAIL_FROM,
+            to=[EMAIL_TO]
         )
         if file:
             mail.attach(file.name, file.file.read(), file.content_type)
