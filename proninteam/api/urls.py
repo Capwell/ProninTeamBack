@@ -8,7 +8,7 @@ router.register('requests', RequestViewSet, basename='requests')
 router.register('users', UsersListViewSet, basename='users')
 
 urlpatterns = [
-    path("v1/", include(router.urls))
+    path('v1/', include(router.urls))
 ]
 
-app_name = "api"
+app_name = 'api'

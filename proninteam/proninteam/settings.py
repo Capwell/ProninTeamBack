@@ -5,8 +5,6 @@ import sys
 from dotenv import load_dotenv
 from pathlib import Path
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proninteam.settings")
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,7 +12,7 @@ load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='x_yaimw^m7@cd8*ksuat5t#ov@_8v9(0per69p-7giif+ml&6p')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -27,15 +25,17 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_PORT = 587
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
+    'users.apps.UsersConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
-    'api',
-    'users',
 ]
 
 MIDDLEWARE = [
@@ -55,9 +55,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-        ],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,21 +75,20 @@ if sys.argv[0].find('pytest'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', default='postgre'),
+            'NAME': os.getenv('DB_NAME'),
             'USER': os.getenv('POSTGRES_USER'),
             'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT')
         }
     }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -118,13 +115,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

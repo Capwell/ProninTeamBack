@@ -11,6 +11,7 @@ importlib-metadata==4.2.0
 iniconfig==1.1.1
 mccabe==0.7.0
 packaging==21.3
+pillow==9.3.0
 pluggy==1.0.0
 psycopg2-binary==2.8.6
 pycodestyle==2.9.1
