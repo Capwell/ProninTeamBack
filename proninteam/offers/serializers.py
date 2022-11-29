@@ -1,14 +1,14 @@
-from django.forms.fields import FileField
+from django.db.transaction import atomic
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from api.models import Request
+from api.models import Offer
 from users.models import User, Role
 
 
 class CreateRequestSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Request
+        model = Offer
         fields = ('name', 'communicate', 'message', 'file', 'is_agreed')
 
     def validate(self, data):
@@ -25,15 +25,10 @@ class CreateRequestSerializer(serializers.ModelSerializer):
             )
         return data
 
+    @atomic
     def create(self, validated_data):
         instance = self.Meta.model.objects.create(**validated_data)
-        file = validated_data.get('file')
-        if file:
-            file.open('rb')
-            instance.send_request_email(file=file)
-            file.close()
-            return instance
-        instance.send_request_email()
+        instance.send_offer_email()
         return instance
 
 

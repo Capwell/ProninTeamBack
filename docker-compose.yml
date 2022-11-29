@@ -29,3 +29,5 @@ services:
       - ./static:/project/static
     env_file:
       - ./environment/.env
+    environment:
+      - WATHCPACK_POLLING=true
