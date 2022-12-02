@@ -1,16 +1,14 @@
 import os
 import sys
 
-
 from dotenv import load_dotenv
 from pathlib import Path
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
 
-SECRET_KEY = os.getenv('SECRET_KEY', default='x_yaimw^m7@cd8*ksuat5t#ov@_8v9(0per69p-7giif+ml&6p')
+SECRET_KEY = os.getenv('SECRET_KEY', default='x_yaimw^m7@cd8*ksuat5t#ov@_8v9(0per69p-7giif+ml&6p') # noqa
 
 DEBUG = False
 
@@ -25,8 +23,9 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_PORT = 587
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
+    'offers.apps.OffersConfig',
     'users.apps.UsersConfig',
+    'cases.apps.CasesConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -36,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -46,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'proninteam.urls'
@@ -92,16 +93,20 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'NumericPasswordValidator',
     },
 ]
 
@@ -110,8 +115,6 @@ LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
-USE_L10N = True
 
 USE_TZ = True
 
@@ -125,7 +128,6 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -135,3 +137,23 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080/',
+]
+
+CSRF_COOKIE_SECURE = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8080',
+]
+
+CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
+                      'content-type', 'accept', 'origin', 'Authorization',
+                      'access-control-allow-methods')

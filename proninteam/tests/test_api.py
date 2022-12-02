@@ -2,30 +2,24 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from api.models import Request
+from api.models import Offer
 
 
 class TestRequest(APITestCase):
+    DATA = {
+        'name': 'name',
+        'communicate': 'communicate',
+        'is_agreed': 'True',
+        'message': 'message' * 10
+    }
+    URL = reverse('api:requests-list')
+
     def test_creating_response_code(self):
-        data = {
-            "name": "name",
-            "communicate": "communicate",
-            "is_agreed": "True",
-            "message": "message" * 10
-        }
-        url = reverse("api:requests-list")
-        response = self.client.post(url, data)
+        response = self.client.post(self.URL, self.DATA)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_is_creating(self):
-        data = {
-            "name": "nametest",
-            "communicate": "communicate",
-            "is_agreed": "True",
-            "message": "message" * 10
-        }
-        requests_count = Request.objects.count()
-        url = reverse("api:requests-list")
-        self.client.post(url, data)
-        new_requests_count = Request.objects.count()
-        self.assertTrue(requests_count < new_requests_count)
+        requests_count = Offer.objects.count()
+        self.client.post(self.URL, self.DATA)
+        new_requests_count = Offer.objects.count()
+        self.assertTrue(requests_count + 1 == new_requests_count)

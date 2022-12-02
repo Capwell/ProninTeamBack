@@ -1,0 +1,24 @@
+name: deploy_workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands to deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USER }}
+        key: ${{ secrets.KEY }}
+        command_timeout: 20m
+        stack_file_name: docker-compose.yaml
+        script: |
+          cd ${{ secrets.REPO_NAME }}
+          git pull
+          docker-compose down
+          docker-compose up -d --build  

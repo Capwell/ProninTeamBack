@@ -4,11 +4,13 @@ from django.db import models
 from django.core.mail import EmailMessage
 from django.core.validators import MinLengthValidator
 
+from proninteam.settings import MEDIA_URL
+
 EMAIL_TO = os.getenv('EMAIL_TO')
 EMAIL_FROM = os.getenv('EMAIL_FROM')
 
 
-class Request(models.Model):
+class Offer(models.Model):
     name = models.CharField(
         'Имя',
         validators=[MinLengthValidator(2)],
@@ -39,13 +41,18 @@ class Request(models.Model):
         null=True
     )
 
-    def send_request_email(self, file=None):
+    class Meta:
+        verbose_name = 'Предложение'
+        verbose_name_plural = 'Предложения'
+
+    def send_offer_email(self):
         mail = EmailMessage(
-            subject='Новая Заявка!',
+            subject='Новое Предложение!',
             body=f'{self.name}, {self.communicate}, {self.message}',
             from_email=EMAIL_FROM,
             to=[EMAIL_TO]
         )
-        if file:
-            mail.attach(file.name, file.file.read(), file.content_type)
+        if self.file:
+            with open(f'{MEDIA_URL}{str(self.file)}', 'rb') as file:
+                mail.attach(file.name, file.read())
         mail.send()
