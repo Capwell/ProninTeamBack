@@ -7,7 +7,7 @@ services:
       - "8080:80"
     volumes:
       - ./environment/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./proninteam/static:/var/html/static
+      - ./static:/var/html/static
     depends_on:
      - backend
   db:
@@ -25,7 +25,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./static:/project/static
+      - ./static:/app/static
     env_file:
       - ./environment/.env
     environment:
