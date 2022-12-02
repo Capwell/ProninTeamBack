@@ -18,8 +18,7 @@ services:
       - ./environment/.env
   backend:
     build:
-      context: .
-      dockerfile: ./proninteam/Dockerfile
+      context: ./proninteam
     restart: always
     expose:
       - 8000
