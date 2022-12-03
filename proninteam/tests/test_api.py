@@ -73,25 +73,3 @@ class TestRequest(APITestCase):
         offers_count = Offer.objects.count()
         self.client.post(self.URLS['offers'], self.VALID_OFFER_DATA)
         self.assertEqual(offers_count + 1, Offer.objects.count())
-    #
-    # @parameterized.expand([
-    #     ('hex_color', 'a' * 8,
-    #      'Слшиком длинное значение для поля "hex_color"'),
-    #     ('hex_color', 'a' * 7,
-    #      'Некорректное значение для поля "hex_color"'),
-    #     ('slug', 'ф',
-    #      'Некорректное значение для поля "slug"'),
-    #     ('slug', '/.,.,?',
-    #      'Некорректное значение для поля "slug"'),
-    #     ('title', 'a' * 21,
-    #      'Слшиком длинное значение для поля "title"'),
-    #     ('text', 'a' * 101,
-    #      'Слишком длинное значение для поля "text"')
-    # ])
-    # def test_not_creating_case(self, key, not_valid_value, exception):
-    #     case_count = Case.objects.count()
-    #     not_valid_case_data = self.VALID_CASE_DATA.copy()
-    #     not_valid_case_data[key] = not_valid_value
-    #     case = Case.objects.create(**not_valid_case_data)
-    #     case.save()
-    #     self.assertEqual(case_count, Case.objects.count(), case.hex_color)
