@@ -10,7 +10,7 @@ load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY', default='x_yaimw^m7@cd8*ksuat5t#ov@_8v9(0per69p-7giif+ml&6p') # noqa
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -34,11 +34,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    "debug_toolbar",
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -157,3 +160,9 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
                       'content-type', 'accept', 'origin', 'Authorization',
                       'access-control-allow-methods')
+
+THUMBNAIL_FORMAT = 'PNG'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

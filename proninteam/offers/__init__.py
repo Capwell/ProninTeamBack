@@ -1,0 +1,16 @@
+AVAILABLE_DATA_TYPES = [
+    'pdf',
+    'doc',
+    'docx',
+    'txt',
+    'png',
+    'jpg',
+    'jpeg',
+    'gif',
+    'ppt',
+    'pptx',
+    'xls',
+    'xlsx',
+    'rtf',
+    'psd',
+]

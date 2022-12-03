@@ -1,19 +1,25 @@
+import os
+
 from django.db.transaction import atomic
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from offers.models import Offer
 
+# CAPTCHA_SECRET_KEY = os.getenv('CAPTCHA_SECRET_KEY')
+
 
 class CreateRequestSerializer(serializers.ModelSerializer):
+    captcha_token = serializers.CharField(write_only=True)
+
     class Meta:
         model = Offer
-        fields = ('name', 'communicate', 'message', 'file', 'is_agreed')
+        fields = ('name', 'communicate', 'message', 'file', 'is_agreed', 'captcha_token')
 
-    def validate(self, data):
-        is_agreed = self.initial_data.get('is_agreed')
-        file = self.initial_data.get('file')
-        message = self.initial_data.get('message')
+    def validate(self, attrs):
+        is_agreed = attrs.get('is_agreed')
+        file = attrs.get('file')
+        message = attrs.get('message')
         if not is_agreed:
             raise ValidationError(
                 'Вы должны согласиться на обработку персональных данных!'
@@ -22,7 +28,7 @@ class CreateRequestSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 'Вы должны либо прикрепить файл, либо написать сообщение!'
             )
-        return data
+        return attrs
 
     @atomic
     def create(self, validated_data):
