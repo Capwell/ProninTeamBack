@@ -1,5 +1,3 @@
-import os
-
 from django.db.transaction import atomic
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -14,7 +12,8 @@ class CreateRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        fields = ('name', 'communicate', 'message', 'file', 'is_agreed', 'captcha_token')
+        fields = ('name', 'communicate', 'message', 'file',
+                  'is_agreed', 'captcha_token')
 
     def validate(self, attrs):
         is_agreed = attrs.get('is_agreed')

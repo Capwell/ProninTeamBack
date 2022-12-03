@@ -1,13 +1,8 @@
-import json
-
-from http import HTTPStatus
-
 from parameterized import parameterized
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from cases.models import Case
 from offers.models import Offer
 
 
