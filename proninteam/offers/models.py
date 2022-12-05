@@ -2,8 +2,9 @@ import os
 
 from django.db import models
 from django.core.mail import EmailMessage
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, FileExtensionValidator
 
+from offers import AVAILABLE_DATA_TYPES
 from proninteam.settings import MEDIA_URL
 
 EMAIL_TO = os.getenv('EMAIL_TO')
@@ -15,30 +16,35 @@ class Offer(models.Model):
         'Имя',
         validators=[MinLengthValidator(2)],
         max_length=20,
-        null=False,
-        blank=False
+        blank=False,
     )
     communicate = models.CharField(
         'Способ связи',
         validators=[MinLengthValidator(2)],
         max_length=20,
-        null=False,
-        blank=False
+        blank=False,
     )
     message = models.TextField(
         'Сообщение',
         validators=[MinLengthValidator(20)],
-        null=True,
-        blank=True
+        null=False,
+        blank=True,
     )
     file = models.FileField(
         'Файл, прикрепленный к заявке',
-        upload_to='api/',
-        null=True
+        validators=[
+          FileExtensionValidator(
+              allowed_extensions=AVAILABLE_DATA_TYPES
+          )
+        ],
+        upload_to='offers/',
+        null=True,
     )
     is_agreed = models.BooleanField(
         'Согласие на обработку персональных данных',
-        null=True
+        blank=False,
+        null=False,
+        default=False,
     )
 
     class Meta:
@@ -53,6 +59,6 @@ class Offer(models.Model):
             to=[EMAIL_TO]
         )
         if self.file:
-            with open(f'{MEDIA_URL}{str(self.file)}', 'rb') as file:
+            with open(f'.{MEDIA_URL}{str(self.file)}', 'rb') as file:
                 mail.attach(file.name, file.read())
         mail.send()

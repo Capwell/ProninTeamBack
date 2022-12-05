@@ -33,12 +33,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup.apps.CleanupConfig',
 
+    "debug_toolbar",
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -157,3 +161,9 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
                       'content-type', 'accept', 'origin', 'Authorization',
                       'access-control-allow-methods')
+
+THUMBNAIL_FORMAT = 'PNG'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

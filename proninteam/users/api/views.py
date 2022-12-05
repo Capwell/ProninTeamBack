@@ -9,4 +9,10 @@ class UsersListViewSet(GenericViewSet, ListModelMixin):
     serializer_class = UserListSerializer
 
     def get_queryset(self):
-        return User.objects.prefetch_related('roles')
+        return User.objects.filter(
+            is_active=True
+        ).prefetch_related(
+            'other_roles'
+        ).select_related(
+            'main_role'
+        )
