@@ -12,5 +12,9 @@ AVAILABLE_DATA_TYPES = [
     'xls',
     'xlsx',
     'rtf',
-    'psd',
+    'zip',
+    'rar',
+    'odt',
+    '7z',
+    'sit',
 ]

@@ -110,6 +110,5 @@ class User(AbstractBaseUser, PermissionsMixin):
                 quality=51
             )
             with open(f'./media/{resized}', 'rb') as photo:
-                self.photo.delete()
                 self.photo.save(photo.name, ContentFile(resized.read()), True)
         super(User, self).save(*args, **kwargs)
