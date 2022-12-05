@@ -4,16 +4,12 @@ from rest_framework.exceptions import ValidationError
 
 from offers.models import Offer
 
-# CAPTCHA_SECRET_KEY = os.getenv('CAPTCHA_SECRET_KEY')
-
 
 class CreateRequestSerializer(serializers.ModelSerializer):
-    captcha_token = serializers.CharField(write_only=True)
-
     class Meta:
         model = Offer
-        fields = ('name', 'communicate', 'message', 'file',
-                  'is_agreed', 'captcha_token')
+        fields = ('name', 'communicate', 'message',
+                  'file', 'is_agreed')
 
     def validate(self, attrs):
         is_agreed = attrs.get('is_agreed')
