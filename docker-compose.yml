@@ -7,15 +7,18 @@ services:
       - "8080:80"
     volumes:
       - ./environment/nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./static:/var/html/static
+      - static:/var/html/static
+      - media:/var/html/media
     depends_on:
      - backend
+
   db:
     image: postgres:13.0-alpine
     volumes:
       - /var/lib/postgresql/data/
     env_file:
       - ./environment/.env
+
   backend:
     build:
       context: ./proninteam
@@ -25,8 +28,13 @@ services:
     depends_on:
       - db
     volumes:
-      - ./static:/app/static
+      - static:/app/static
+      - media:/app/media
     env_file:
       - ./environment/.env
     environment:
       - WATHCPACK_POLLING=true
+
+volumes:
+  media:
+  static:
