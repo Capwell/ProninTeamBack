@@ -8,6 +8,6 @@ def ping(request):
     return Response(
         status=status.HTTP_200_OK,
         data={
-            "message": "pong"
+            'message': 'pong'
         }
     )
