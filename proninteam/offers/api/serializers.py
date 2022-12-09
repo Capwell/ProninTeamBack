@@ -1,8 +1,7 @@
 from django.db.transaction import atomic
+from offers.models import Offer
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-
-from offers.models import Offer
 
 
 class CreateRequestSerializer(serializers.ModelSerializer):

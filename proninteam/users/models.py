@@ -1,10 +1,7 @@
-from django.contrib.auth.models import (AbstractBaseUser,
-                                        BaseUserManager,
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.core.files.base import ContentFile
-
 from django.db import models
-
 from sorl.thumbnail import get_thumbnail
 
 

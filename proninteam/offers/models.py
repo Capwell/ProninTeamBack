@@ -1,9 +1,8 @@
 import os
 
-from django.db import models
 from django.core.mail import EmailMessage
-from django.core.validators import MinLengthValidator, FileExtensionValidator
-
+from django.core.validators import FileExtensionValidator, MinLengthValidator
+from django.db import models
 from offers import AVAILABLE_DATA_TYPES
 from proninteam.settings import MEDIA_URL
 
