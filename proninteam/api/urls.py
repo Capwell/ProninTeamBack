@@ -1,7 +1,5 @@
-from django.urls import path, include
-
 from api.views import ping
-
+from django.urls import include, path
 
 urlpatterns = [
     path('', include('offers.urls')),

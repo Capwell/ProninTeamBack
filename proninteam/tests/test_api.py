@@ -1,9 +1,8 @@
-from parameterized import parameterized
 from django.urls import reverse
+from offers.models import Offer
+from parameterized import parameterized
 from rest_framework import status
 from rest_framework.test import APITestCase
-
-from offers.models import Offer
 
 
 class TestRequest(APITestCase):

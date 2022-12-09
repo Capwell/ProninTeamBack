@@ -1,11 +1,9 @@
+from cases.api.serializers import CaseSerializer
+from cases.models import Case
 from rest_framework.decorators import action
-from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
-
-
-from cases.models import Case
-from cases.api.serializers import CaseSerializer
+from rest_framework.viewsets import GenericViewSet
 
 
 class CaseViewSet(GenericViewSet, ListModelMixin):
