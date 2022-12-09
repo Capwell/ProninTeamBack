@@ -1,6 +1,6 @@
- name: tests_workflow
+name: tests_workflow
 
-on: [push]
+on: push
 
 jobs:
   tests:
