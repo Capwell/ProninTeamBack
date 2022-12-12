@@ -20,28 +20,45 @@ class Role(models.Model):
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password):
-        if not email:
-            raise ValueError('У пользователя должен быть указан email')
+    """
+    Custom user manager.
+    Validate data and create new user entry.
+    """
+    def _create_user(self, email, password, **kwargs):
+        is_staff = kwargs.pop('is_staff', False)
+        is_superuser = kwargs.pop('is_superuser', False)
+        email = self.normalize_email(email)
+
         user = self.model(
-            email=self.normalize_email(email),
+            email=email,
+            is_staff=is_staff,
+            is_superuser=is_superuser,
+            is_active=True,
+            **kwargs,
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
-        user = self.model(
-            email=self.normalize_email(email)
+    def create_user(self, email, password, **kwargs):
+        """Creating a user."""
+        return self._create_user(email, password, **kwargs)
+
+    def create_superuser(self, email, password, **kwargs):
+        """Creating a superuser."""
+        return self._create_user(
+            email=email,
+            password=password,
+            is_staff=True,
+            is_superuser=True,
+            **kwargs
         )
-        user.set_password(password)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save(using=self._db)
-        return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    Stores a single custom user entry.
+    """
     first_name = models.CharField(
         'Имя',
         max_length=100,

@@ -154,12 +154,12 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
-    'https://proninteam.ru/',
+    'https://proninteam.ru',
 ]
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
-    'https://proninteam.ru/',
+    'https://proninteam.ru',
 ]
 
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
