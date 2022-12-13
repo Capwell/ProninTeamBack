@@ -13,11 +13,11 @@ This is the backend code for ProninTeam project. For more information about the 
 - [Frontend](https://github.com/Capwell/ProninTeamFront)
 
 ## <a name="local-deployment-scenarios"></a>Local deployment scenario
-Clone repository:
+#### Clone repository:
 
 ```git@github.com:Capwell/ProninTeamBack.git```
 
-Create .env file at `.environment/` directory:
+#### Create .env file at `.environment/` directory:
 
 ```
 SECRET_KEY=<secret_key>
@@ -35,5 +35,16 @@ EMAIL_TO=<email_to>
 EMAIL_FROM=<email_from>
 CAPTCHA_SECRET_KEY=<capthca_secret_key>
 ```
-Run docker-compose:
+#### Run docker-compose:
 ```docker-compose up -d```
+
+#### Migrate schemes, collect static and create superuser:
+``` 
+sudo docker-compose exec -it backend bash
+
+python manage.py collectstatic --noinput
+    
+python manage.py migrate --noinput
+
+python manage.py createsuperuser
+```
