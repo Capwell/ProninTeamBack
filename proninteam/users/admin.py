@@ -27,7 +27,7 @@ class UserCreationForm(forms.ModelForm):
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError(_('Пароли не совпадают.'))
         return password2
 
     def save(self, commit=True):
@@ -63,12 +63,13 @@ class UserAdmin(BaseUserAdmin):
     User admin panel.
     With custom filter params.
     """
-
     form = UserChangeForm
     add_form = UserCreationForm
 
     list_display = (
         'email',
+        'get_full_name',
+        'main_role',
     )
     list_filter = (
         'is_superuser',
@@ -111,6 +112,10 @@ class UserAdmin(BaseUserAdmin):
     )
     ordering = ('-email',)
     filter_horizontal = ()
+
+    @admin.display(description=_('Полное Имя'))
+    def get_full_name(self, obj):
+        return f'{obj}'
 
 
 admin.site.unregister(Group)

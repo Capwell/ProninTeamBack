@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
 
-    "debug_toolbar",
+    'debug_toolbar',
     'rest_framework',
     'corsheaders',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
