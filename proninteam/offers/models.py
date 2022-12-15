@@ -3,8 +3,9 @@ import os
 from django.core.mail import EmailMessage
 from django.core.validators import FileExtensionValidator, MinLengthValidator
 from django.db import models
-from offers import AVAILABLE_DATA_TYPES
 
+from offers import AVAILABLE_DATA_TYPES
+from offers.api.utils import send_telegram_message
 from proninteam.settings import MEDIA_URL
 
 EMAIL_TO = os.getenv('EMAIL_TO')
@@ -62,3 +63,14 @@ class Offer(models.Model):
             with open(f'.{MEDIA_URL}{str(self.file)}', 'rb') as file:
                 mail.attach(file.name, file.read())
         mail.send()
+
+    def send_offer_telegram(self):
+        message = (
+            f'Представьтесь: {self.name}\n'
+            f'Способ связи: {self.communicate}\n'
+            )
+        if self.message:
+            message += f'Сообщение: {self.message}\n'
+        if self.file:
+            message += 'Файл отправлен на почту!'
+        send_telegram_message(message)

@@ -20,7 +20,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_LOGIN')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
-EMAIL_PORT = 587
+EMAIL_PORT = 465
 
 INSTALLED_APPS = [
     'offers.apps.OffersConfig',
@@ -35,10 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_cleanup.apps.CleanupConfig',
 
-    "debug_toolbar",
+    'debug_toolbar',
     'rest_framework',
     'corsheaders',
-    'sorl.thumbnail'
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_cprofile_middleware.middleware.ProfilerMiddleware",
+    'django_cprofile_middleware.middleware.ProfilerMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 ]
 
@@ -144,8 +144,8 @@ REST_FRAMEWORK = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8080/',
-    'https://proninteam.ru/',
+    'http://localhost:8080',
+    'https://proninteam.ru',
 ]
 
 CSRF_COOKIE_SECURE = True
