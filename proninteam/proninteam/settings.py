@@ -20,7 +20,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_LOGIN')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 
 INSTALLED_APPS = [
     'offers.apps.OffersConfig',
