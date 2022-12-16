@@ -3,9 +3,9 @@ import os
 from django.core.mail import EmailMessage
 from django.core.validators import FileExtensionValidator, MinLengthValidator
 from django.db import models
+
 from offers import AVAILABLE_DATA_TYPES
 from offers.api.utils import send_telegram_message
-
 from proninteam.settings import MEDIA_URL
 
 EMAIL_TO = os.getenv('EMAIL_TO')
