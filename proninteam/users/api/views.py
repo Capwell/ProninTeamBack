@@ -9,7 +9,8 @@ class UsersListViewSet(GenericViewSet, ListModelMixin):
 
     def get_queryset(self):
         return User.objects.filter(
-            is_active=True
+            is_active=True,
+            is_superuser=False
         ).prefetch_related(
             'other_roles'
         ).select_related(
