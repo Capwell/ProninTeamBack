@@ -3,6 +3,7 @@ import os
 from django.core.mail import EmailMessage
 from django.core.validators import FileExtensionValidator, MinLengthValidator
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from offers import AVAILABLE_DATA_TYPES
 from offers.api.utils import send_telegram_message
@@ -13,26 +14,27 @@ EMAIL_FROM = os.getenv('EMAIL_FROM')
 
 
 class Offer(models.Model):
+    """Stores a single offer entry."""
     name = models.CharField(
-        'Имя',
+        verbose_name=_('Имя'),
         validators=[MinLengthValidator(2)],
         max_length=20,
         blank=False,
     )
     communicate = models.CharField(
-        'Способ связи',
+        verbose_name=_('Способ связи'),
         validators=[MinLengthValidator(2)],
         max_length=20,
         blank=False,
     )
     message = models.TextField(
-        'Сообщение',
+        verbose_name=_('Сообщение'),
         validators=[MinLengthValidator(20)],
         null=False,
         blank=True,
     )
     file = models.FileField(
-        'Файл, прикрепленный к заявке',
+        verbose_name=_('Файл, прикрепленный к заявке'),
         validators=[
           FileExtensionValidator(
               allowed_extensions=AVAILABLE_DATA_TYPES
@@ -42,15 +44,11 @@ class Offer(models.Model):
         null=True,
     )
     is_agreed = models.BooleanField(
-        'Согласие на обработку персональных данных',
+        verbose_name=_('Согласие на обработку персональных данных'),
         blank=False,
         null=False,
         default=False,
     )
-
-    class Meta:
-        verbose_name = 'Предложение'
-        verbose_name_plural = 'Предложения'
 
     def send_offer_email(self):
         mail = EmailMessage(
@@ -63,7 +61,7 @@ class Offer(models.Model):
             with open(f'.{MEDIA_URL}{str(self.file)}', 'rb') as file:
                 mail.attach(file.name, file.read())
         mail.send()
-
+        
     def send_offer_telegram(self):
         message = (
             f'Представьтесь: {self.name}\n'
@@ -73,4 +71,13 @@ class Offer(models.Model):
             message += f'Сообщение: {self.message}\n'
         if self.file:
             message += 'Файл отправлен на почту!'
-        send_telegram_message(message)
+        send_telegram_message(message)   
+
+    def __str__(self) -> str:
+        """Return string representation of the object."""
+        return f'{self.name}'
+
+    class Meta:
+        ordering = ['-id']
+        verbose_name = _('Предложение')
+        verbose_name_plural = _('Предложения')
