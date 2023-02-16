@@ -36,6 +36,6 @@ class CreateRequestSerializer(serializers.ModelSerializer):
     @atomic
     def create(self, validated_data):
         instance = self.Meta.model.objects.create(**validated_data)
-        instance.send_offer_email()
+        # instance.send_offer_email()
         instance.send_offer_telegram()
         return instance
